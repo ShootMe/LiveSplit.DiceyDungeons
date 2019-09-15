@@ -19,7 +19,7 @@ namespace LiveSplit.DiceyDungeons {
 		private Dictionary<LogObject, string> currentValues = new Dictionary<LogObject, string>();
 		private SplitterMemory mem;
 		private SplitterSettings settings;
-		private int currentSplit = -1, lastLogCheck, lastFloor;
+		private int currentSplit = -1, lastLogCheck, lastFloor, lastHP;
 		private bool hasLog, lastHasPointer;
 		private Thread updateLoop;
 
@@ -76,23 +76,21 @@ namespace LiveSplit.DiceyDungeons {
 				lastHasPointer = hasPointer;
 			} else if (Model.CurrentState.CurrentPhase == TimerPhase.Running) {
 				int floor = mem.Floor();
+				int hp = mem.HasPointer(Player.Enemy) ? mem.HP(Player.Enemy) : 1;
 
-				if (currentSplit < Model.CurrentState.Run.Count && currentSplit < settings.Splits.Count) {
-					SplitName split = settings.Splits[currentSplit];
+				SplitName split = currentSplit < Model.CurrentState.Run.Count && currentSplit < settings.Splits.Count ? settings.Splits[currentSplit] : SplitName.Boss;
 
-					switch (split) {
-						case SplitName.Floor1: shouldSplit = lastFloor == 1 && floor == 2; break;
-						case SplitName.Floor2: shouldSplit = lastFloor == 2 && floor == 3; break;
-						case SplitName.Floor3: shouldSplit = lastFloor == 3 && floor == 4; break;
-						case SplitName.Floor4: shouldSplit = lastFloor == 4 && floor == 5; break;
-						case SplitName.Floor5: shouldSplit = lastFloor == 5 && floor == 6; break;
-						case SplitName.Boss: shouldSplit = floor == 6 && mem.HasPointer(Player.Enemy) && mem.HP(Player.Enemy) <= 0; break;
-					}
-				} else {
-					shouldSplit = floor == 6 && mem.HasPointer(Player.Enemy) && mem.HP(Player.Enemy) <= 0;
+				switch (split) {
+					case SplitName.Floor1: shouldSplit = lastFloor == 1 && floor == 2; break;
+					case SplitName.Floor2: shouldSplit = lastFloor == 2 && floor == 3; break;
+					case SplitName.Floor3: shouldSplit = lastFloor == 3 && floor == 4; break;
+					case SplitName.Floor4: shouldSplit = lastFloor == 4 && floor == 5; break;
+					case SplitName.Floor5: shouldSplit = lastFloor == 5 && floor == 6; break;
+					case SplitName.Boss: shouldSplit = floor == 6 && hp <= 0 && lastHP > 0; break;
 				}
 
 				lastFloor = floor;
+				lastHP = hp;
 			}
 
 			HandleSplit(shouldSplit, false);
