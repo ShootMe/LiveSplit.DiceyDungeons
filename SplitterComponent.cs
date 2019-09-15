@@ -32,8 +32,6 @@ namespace LiveSplit.DiceyDungeons {
 
 			if (state != null) {
 				Model = new TimerModel() { CurrentState = state };
-				Model.InitializeGameTime();
-				Model.CurrentState.IsGameTimePaused = true;
 				state.OnReset += OnReset;
 				state.OnPause += OnPause;
 				state.OnResume += OnResume;
@@ -166,8 +164,6 @@ namespace LiveSplit.DiceyDungeons {
 		}
 		public void OnStart(object sender, EventArgs e) {
 			currentSplit = 0;
-			Model.CurrentState.SetGameTime(TimeSpan.Zero);
-			Model.CurrentState.IsGameTimePaused = true;
 			WriteLog("---------New Game " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3) + "-------------------------");
 		}
 		public void OnUndoSplit(object sender, EventArgs e) {
