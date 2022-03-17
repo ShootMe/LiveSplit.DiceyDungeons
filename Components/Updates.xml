@@ -8,4 +8,12 @@
 			<change> Initial Release </change>
 		</changelog>
 	</update>
+  <update version="1.1.0">
+    <files>
+      <file path="Components/LiveSplit.DiceyDungeons.dll" status="changed"/>
+    </files>
+    <changelog>
+      <change> Updated floor autosplit and boss autosplit to work properly with v1.12.2, 25-10-2021, STEAM, 64-bit, GL version </change>
+    </changelog>
+  </update>
 </updates>
