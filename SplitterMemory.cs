@@ -3,8 +3,8 @@ using System;
 using System.Diagnostics;
 namespace LiveSplit.DiceyDungeons {
 	public enum Player {
-		User = 0x1b25f00,
-		Enemy = 0x1b25f08
+		User = 0x1cbc7f8,
+		Enemy = 0x1cbc800
 	}
 	public partial class SplitterMemory {
 		public Process Program { get; set; }
@@ -56,10 +56,10 @@ namespace LiveSplit.DiceyDungeons {
 			return PlayerXPNeeded() - Program.Read<int>(BaseAddress, 0x1b1a908);
 		}
 		public int PlayerXPNeeded() {
-			return Program.Read<int>(BaseAddress, 0x1b1a90c);
+			return Program.Read<int>(BaseAddress, 0x1cb0938);
 		}
 		public int Floor() {
-			return Program.Read<int>(BaseAddress, 0x1b25ecc) + 1;
+			return Program.Read<int>(BaseAddress, 0x1cbc778) + 1;
 		}
 		public bool HookProcess() {
 			IsHooked = Program != null && !Program.HasExited;
