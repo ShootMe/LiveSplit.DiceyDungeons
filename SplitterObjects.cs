@@ -21,8 +21,7 @@ namespace LiveSplit.DiceyDungeons {
 	public enum SplitName {
 		[Description("Manual Split (Not Automatic)"), ToolTip("Does not split automatically. Use this for custom splits not yet defined.")]
 		ManualSplit,
-
-		[Description("Floor 1"), ToolTip("Splits when leaving Floor 1")]
+        [Description("Floor 1"), ToolTip("Splits when leaving Floor 1")]
 		Floor1,
 		[Description("Floor 2"), ToolTip("Splits when leaving Floor 2")]
 		Floor2,
@@ -33,6 +32,18 @@ namespace LiveSplit.DiceyDungeons {
 		[Description("Floor 5"), ToolTip("Splits when leaving Floor 5")]
 		Floor5,
 		[Description("Boss"), ToolTip("Splits when beating the Boss")]
-		Boss
-	}
+		Boss,
+        [Description("Warrior Defeated"), ToolTip("Splits when Warrior defeated")]
+        WarriorDefeated,
+        [Description("Thief Defeated"), ToolTip("Splits when Thief defeated")]
+        ThiefDefeated,
+        [Description("Robot Defeated"), ToolTip("Splits when Robot defeated")]
+        RobotDefeated,
+        [Description("Inventor Defeated"), ToolTip("Splits when Inventor defeated")]
+        InventorDefeated,
+        [Description("Witch Defeated"), ToolTip("Splits when Witch defeated")]
+        WitchDefeated,
+        [Description("Jester Defeated"), ToolTip("Splits when Jester defeated")]
+        JesterDefeated
+    }
 }
