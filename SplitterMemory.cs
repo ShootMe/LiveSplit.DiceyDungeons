@@ -56,10 +56,12 @@ namespace LiveSplit.DiceyDungeons {
         /// <summary>
         /// The index of the character selected in the menu.
         /// </summary>
-        /// <returns>0: Warrior, 1: Thief, 2: Robot, 3: Inventor, 4: Witch, 5: Jester, 6: Backstage</returns>
+        /// <returns>0: Warrior, 1: Thief, 2: Robot, 3: Inventor, 4: Witch, 5: Jester, 6: Backstage.<br />
+		/// If Halloween, 0: Warrior, 1: Inventor, 2: Witch.<br />
+		/// If Reunion, 0: Thief, 1: Jester, 2: Warrior, 3: Witch, 4: Robot, 5: Inventor</returns>
         public int CharacterSelectedIndex()
         {
-            return Program.Read<int>(BaseAddress, 0x1CB1308);
+            return Program.Read<int>(BaseAddress, 0x1D1C238);
         }
 
         /// <summary>
@@ -67,7 +69,7 @@ namespace LiveSplit.DiceyDungeons {
         /// </summary>
         public int EpisodeSelected()
         {
-            return Program.Read<int>(BaseAddress, 0x1CB0D4C) + 1;
+            return Program.Read<int>(BaseAddress, 0x1D1BC74) + 1;
         }
 
         public int PlayerXP() {
