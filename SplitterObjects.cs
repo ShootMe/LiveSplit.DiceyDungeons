@@ -33,6 +33,8 @@ namespace LiveSplit.DiceyDungeons {
 		[Description("Floor 5"), ToolTip("Splits when leaving Floor 5")]
 		Floor5,
 		[Description("Boss"), ToolTip("Splits when beating the Boss")]
-		Boss
+		Boss,
+		[Description("Enemy Defeated"), ToolTip("Splits when beating any enemy")]
+		EnemyDefeated
 	}
 }

@@ -85,6 +85,7 @@ namespace LiveSplit.DiceyDungeons {
 					case SplitName.Floor4: shouldSplit = lastFloor == 4 && floor == 5; break;
 					case SplitName.Floor5: shouldSplit = lastFloor == 5 && floor == 6; break;
 					case SplitName.Boss: shouldSplit = floor == 6 && hp <= 0 && lastHP > 0; break;
+					case SplitName.EnemyDefeated: shouldSplit = hp <= 0 && lastHP > 0; break;
 				}
 
 				lastFloor = floor;
