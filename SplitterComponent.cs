@@ -19,7 +19,7 @@ namespace LiveSplit.DiceyDungeons {
 		private Dictionary<LogObject, string> currentValues = new Dictionary<LogObject, string>();
 		private SplitterMemory mem;
 		private SplitterSettings settings;
-		private int currentSplit = -1, lastLogCheck, lastFloor, lastHP;
+		private int currentSplit = -1, lastLogCheck, lastFloor, lastHP, lastPlayerHp;
 		private bool hasLog, lastHasPointer;
 		private Thread updateLoop;
 
@@ -76,10 +76,19 @@ namespace LiveSplit.DiceyDungeons {
 				int floor = mem.Floor();
 				int hp = mem.HasPointer(Player.Enemy) ? mem.HP(Player.Enemy) : 1;
 
+                int playerSelected = mem.HasPointer(Player.User) ? mem.CharacterSelectedIndex() : -1;
+                int playerHp = mem.HasPointer(Player.User) ? mem.HP(Player.User) : 1;
+
 				SplitName split = currentSplit < Model.CurrentState.Run.Count && currentSplit < settings.Splits.Count ? settings.Splits[currentSplit] : SplitName.Boss;
 
 				switch (split) {
-					case SplitName.Floor1: shouldSplit = lastFloor == 1 && floor == 2; break;
+                    case SplitName.WarriorDefeated: shouldSplit = ShouldSplitOnDefeat(playerSelected, 0, playerHp, lastPlayerHp); break;
+                    case SplitName.ThiefDefeated: shouldSplit = ShouldSplitOnDefeat(playerSelected, 1, playerHp, lastPlayerHp); break;
+                    case SplitName.RobotDefeated: shouldSplit = ShouldSplitOnDefeat(playerSelected, 2, playerHp, lastPlayerHp); break;
+                    case SplitName.InventorDefeated: shouldSplit = ShouldSplitOnDefeat(playerSelected, 3, playerHp, lastPlayerHp); break;
+                    case SplitName.WitchDefeated: shouldSplit = ShouldSplitOnDefeat(playerSelected, 4, playerHp, lastPlayerHp); break;
+                    case SplitName.JesterDefeated: shouldSplit = ShouldSplitOnDefeat(playerSelected, 5, playerHp, lastPlayerHp); break;
+                    case SplitName.Floor1: shouldSplit = lastFloor == 1 && floor == 2; break;
 					case SplitName.Floor2: shouldSplit = lastFloor == 2 && floor == 3; break;
 					case SplitName.Floor3: shouldSplit = lastFloor == 3 && floor == 4; break;
 					case SplitName.Floor4: shouldSplit = lastFloor == 4 && floor == 5; break;
@@ -90,7 +99,8 @@ namespace LiveSplit.DiceyDungeons {
 
 				lastFloor = floor;
 				lastHP = hp;
-			}
+                lastPlayerHp = playerHp;
+            }
 
 			HandleSplit(shouldSplit, false);
 		}
@@ -190,6 +200,18 @@ namespace LiveSplit.DiceyDungeons {
 				}
 			}
 		}
+
+        /// <summary>
+        /// Returns true if the player health is 0 during a fight.
+        /// </summary>
+        /// <param name="charIndex">Index of character selected in menu. 0 = Warrior, 1 = Thief, 2 = Robot, 3 = Inventor, 4 = Witch, 5 = Jester, 6 = Backstage, -1 = no character</param>
+        /// <param name="expectedCharIndex">The index of the character expected to be defeated.</param>
+        /// <param name="playerHp">The amount of HP the player has (1 if none selected)</param>
+        /// <returns></returns>
+        private bool ShouldSplitOnDefeat(int charIndex, int expectedCharIndex, int playerHp, int lastPlayerHp)
+        {
+            return charIndex != -1 && charIndex == expectedCharIndex && playerHp <= 0 && lastPlayerHp > 0;
+        }
 
 		public Control GetSettingsControl(LayoutMode mode) { return settings; }
 		public void SetSettings(XmlNode document) { settings.SetSettings(document); }

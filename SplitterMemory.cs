@@ -51,8 +51,26 @@ namespace LiveSplit.DiceyDungeons {
 		}
 		public bool Turn(Player player = Player.User) {
 			return !Program.Read<bool>(BaseAddress, (int)player, 0x20);
-		}
-		public int PlayerXP() {
+        }
+
+        /// <summary>
+        /// The index of the character selected in the menu.
+        /// </summary>
+        /// <returns>0: Warrior, 1: Thief, 2: Robot, 3: Inventor, 4: Witch, 5: Jester, 6: Backstage</returns>
+        public int CharacterSelectedIndex()
+        {
+            return Program.Read<int>(BaseAddress, 0x1CB1308);
+        }
+
+        /// <summary>
+        /// The last episode selected in the episode selection menu.
+        /// </summary>
+        public int EpisodeSelected()
+        {
+            return Program.Read<int>(BaseAddress, 0x1CB0D4C) + 1;
+        }
+
+        public int PlayerXP() {
 			return PlayerXPNeeded() - Program.Read<int>(BaseAddress, 0x1d1b864);
 		}
 		public int PlayerXPNeeded() {

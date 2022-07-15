@@ -6,3 +6,7 @@
 /bin
 /Components/LiveSplit.DiceyDungeons.exe
 /obj
+# NuGet Packages
+*.nupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/

@@ -8,6 +8,14 @@
       <change> Updated floor autosplit and boss autosplit to work properly with v2.0, 06-07-2022, STEAM, 64-bit, GL version </change>
     </changelog>
   </update>
+  <update version="1.2.0">
+    <files>
+      <file path="Components/LiveSplit.DiceyDungeons.dll" status="changed"/>
+    </files>
+    <changelog>
+      <change> Added splits for characters being defeated for the Full Game Any% route </change>
+    </changelog>
+  </update>
 	<update version="1.1.0">
 		<files>
 			<file path="Components/LiveSplit.DiceyDungeons.dll" status="changed"/>
