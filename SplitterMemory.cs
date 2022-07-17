@@ -3,8 +3,8 @@ using System;
 using System.Diagnostics;
 namespace LiveSplit.DiceyDungeons {
 	public enum Player {
-		User = 0x1cbc7f8,
-		Enemy = 0x1cbc800
+		User = 0x1D267E8,
+		Enemy = 0x1D267F0
 	}
 	public partial class SplitterMemory {
 		public Process Program { get; set; }
@@ -56,10 +56,12 @@ namespace LiveSplit.DiceyDungeons {
         /// <summary>
         /// The index of the character selected in the menu.
         /// </summary>
-        /// <returns>0: Warrior, 1: Thief, 2: Robot, 3: Inventor, 4: Witch, 5: Jester, 6: Backstage</returns>
+        /// <returns>0: Warrior, 1: Thief, 2: Robot, 3: Inventor, 4: Witch, 5: Jester, 6: Backstage.<br />
+		/// If Halloween, 0: Warrior, 1: Inventor, 2: Witch.<br />
+		/// If Reunion, 0: Thief, 1: Jester, 2: Warrior, 3: Witch, 4: Robot, 5: Inventor</returns>
         public int CharacterSelectedIndex()
         {
-            return Program.Read<int>(BaseAddress, 0x1CB1308);
+            return Program.Read<int>(BaseAddress, 0x1D1B1D8);
         }
 
         /// <summary>
@@ -67,18 +69,22 @@ namespace LiveSplit.DiceyDungeons {
         /// </summary>
         public int EpisodeSelected()
         {
-            return Program.Read<int>(BaseAddress, 0x1CB0D4C) + 1;
+            return Program.Read<int>(BaseAddress, 0x1D1AC14) + 1;
         }
 
-        public int PlayerXP() {
-			return PlayerXPNeeded() - Program.Read<int>(BaseAddress, 0x1b1a908);
+		/// <summary>
+		/// Returns the current amount of XP in the EXP bar.
+		/// </summary>
+		public int PlayerXP() {
+			return Program.Read<int>(BaseAddress, 0x1D1A804) - PlayerXPNeeded();
 		}
 		public int PlayerXPNeeded() {
-			return Program.Read<int>(BaseAddress, 0x1cb0938);
+			return Program.Read<int>(BaseAddress, 0x1D1A800);
 		}
 		public int Floor() {
-			return Program.Read<int>(BaseAddress, 0x1cbc778) + 1;
+			return Program.Read<int>(BaseAddress, 0x1D26760) + 1;
 		}
+
 		public bool HookProcess() {
 			IsHooked = Program != null && !Program.HasExited;
 			if (!IsHooked && DateTime.Now > LastHooked.AddSeconds(1)) {

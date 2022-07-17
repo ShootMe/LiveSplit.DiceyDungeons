@@ -44,6 +44,8 @@ namespace LiveSplit.DiceyDungeons {
         [Description("Witch Defeated"), ToolTip("Splits when Witch defeated")]
         WitchDefeated,
         [Description("Jester Defeated"), ToolTip("Splits when Jester defeated")]
-        JesterDefeated
-    }
+        JesterDefeated,
+		[Description("Enemy Defeated"), ToolTip("Splits when beating any enemy")]
+		EnemyDefeated
+	}
 }
