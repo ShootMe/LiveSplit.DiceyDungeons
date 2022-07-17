@@ -3,8 +3,8 @@ using System;
 using System.Diagnostics;
 namespace LiveSplit.DiceyDungeons {
 	public enum Player {
-		User = 0x1d27848,
-		Enemy = 0x1d27850
+		User = 0x1D267E8,
+		Enemy = 0x1D267F0
 	}
 	public partial class SplitterMemory {
 		public Process Program { get; set; }
@@ -61,7 +61,7 @@ namespace LiveSplit.DiceyDungeons {
 		/// If Reunion, 0: Thief, 1: Jester, 2: Warrior, 3: Witch, 4: Robot, 5: Inventor</returns>
         public int CharacterSelectedIndex()
         {
-            return Program.Read<int>(BaseAddress, 0x1D1C238);
+            return Program.Read<int>(BaseAddress, 0x1D1B1D8);
         }
 
         /// <summary>
@@ -69,17 +69,20 @@ namespace LiveSplit.DiceyDungeons {
         /// </summary>
         public int EpisodeSelected()
         {
-            return Program.Read<int>(BaseAddress, 0x1D1BC74) + 1;
+            return Program.Read<int>(BaseAddress, 0x1D1AC14) + 1;
         }
 
-        public int PlayerXP() {
-			return PlayerXPNeeded() - Program.Read<int>(BaseAddress, 0x1d1b864);
+		/// <summary>
+		/// Returns the current amount of XP in the EXP bar.
+		/// </summary>
+		public int PlayerXP() {
+			return Program.Read<int>(BaseAddress, 0x1D1A804) - PlayerXPNeeded();
 		}
 		public int PlayerXPNeeded() {
-			return Program.Read<int>(BaseAddress, 0x1d1b860);
+			return Program.Read<int>(BaseAddress, 0x1D1A800);
 		}
 		public int Floor() {
-			return Program.Read<int>(BaseAddress, 0x1d277c0) + 1;
+			return Program.Read<int>(BaseAddress, 0x1D26760) + 1;
 		}
 
 		public bool HookProcess() {
