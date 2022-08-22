@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <updates>
+  <update version="2.1.0">
+    <files>
+      <file path="Components/LiveSplit.DiceyDungeons.dll" status="changed"/>
+    </files>
+    <changelog>
+      <change> Updated autosplitter to work properly with v2.1, 10-08-2022, STEAM, 64-bit, GL version </change>
+    </changelog>
+  </update>
   <update version="2.0.1">
     <files>
       <file path="Components/LiveSplit.DiceyDungeons.dll" status="changed"/>
